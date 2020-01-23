@@ -36,10 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user_login_reg',
+    'account',
 ]
 
-AUTH_USER_MODEL = 'user_login_reg.CustomUser' #changes django user by custom
+AUTH_USER_MODEL = 'account.CustomUser' #changes django user by custom
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
