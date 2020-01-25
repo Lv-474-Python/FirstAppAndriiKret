@@ -1,22 +1,46 @@
-from django.contrib.auth import authenticate
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import CustomUser
 
-def index(request):
-    someone = request.user
-    return HttpResponse(someone)
 
-# def login(request):
-#     name = request.POST.get('name')
-#     password = request.POST.get('password')
-#     user = authenticate(name=name,password=password)
+def index(request):
+    return render(request, 'base.html')
+
+
+def log_in(request):
+    if request.user.is_authenticated:
+        return redirect('user list')
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        current_user = authenticate(username=username, password=password)
+        if current_user and current_user.is_active:
+            login(request, current_user)
+            return redirect('user list')
+        return render(request, 'log_in.html')
+
 
 def register(request):
-    # return render(request, 'register.html')
+    ''' used to create users and send to db'''
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = CustomUser.create_user(username, password)
     if user:
         return HttpResponse('user added')
     return render(request, 'register.html')
+
+
+def user_list(request):
+    ''' returns list of users from db'''
+
+    return render(request, 'user_list.html',
+                  {
+                      'user_list': CustomUser.objects.all(),
+                      'user_logged': request.user.is_authenticated
+                  })
+
+
+def log_out(request):
+    logout(request)
+    return redirect('log_in')

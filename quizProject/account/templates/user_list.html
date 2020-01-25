@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}User list{% endblock %}
+{% block content %}
+{% if user_logged%}
+<a href="log_out">Log Out</a>
+{% endif %}
+
+{{user_list}}
+
+{% endblock %}

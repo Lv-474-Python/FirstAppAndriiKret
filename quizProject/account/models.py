@@ -1,8 +1,9 @@
-from django.db import models , IntegrityError
+from django.db import models, IntegrityError
 
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+
 
 # Create your models here.
 class CustomUser(AbstractBaseUser):
@@ -13,9 +14,9 @@ class CustomUser(AbstractBaseUser):
     USERNAME_FIELD = 'username'
     objects = BaseUserManager()
 
-    @staticmethod
+
     def create_user(username, password):
-        user = CustomUser(username = username, password = password)
+        user = CustomUser(username=username, password=password)
         user.set_password(password)
         try:
             user.save()
@@ -24,7 +25,7 @@ class CustomUser(AbstractBaseUser):
             return None
 
     def __str__(self):
-        return f'username: {self.username}, {self.email}'
+        return f'username: {self.username}, is_quiz_creator: {self.quiz_creator}'
 
     def get_username(self):
         return self.username
@@ -40,7 +41,6 @@ class CustomUser(AbstractBaseUser):
     @property
     def is_quiz_creator(self):
         return self.quiz_creator
-
 
 # class UserManager(BaseUserManager):
 #     def create_user(self, username, email, password=None, is_active=True, is_admin=False, is_stuff=False):

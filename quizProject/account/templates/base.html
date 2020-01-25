@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Home page{% endblock %}</title>
+    <link rel='stylesheet' href="{% static 'css/log_in.css' %}">
 </head>
 <body>
 {% block content %}
-Welcome!
+<h1>Welcome!</h1>
 {% endblock %}
 </body>
 </html>
