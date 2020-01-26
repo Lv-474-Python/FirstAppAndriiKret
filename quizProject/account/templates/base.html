@@ -4,9 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Home page{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel='stylesheet' href="{% static 'css/log_in.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="home_page">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            {% if user_logged%}
+            <li class="nav-item">
+                <a class="nav-link" href="log_out">logout</a>
+            </li>
+            {% else%}
+            <li class="nav-item">
+                <a class="nav-link" href="log_in">Log In</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="register_user">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
 {% block content %}
 <h1>Welcome!</h1>
 {% endblock %}

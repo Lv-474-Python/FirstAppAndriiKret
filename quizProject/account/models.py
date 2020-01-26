@@ -25,30 +25,16 @@ class CustomUser(AbstractBaseUser):
             return None
 
     def __str__(self):
-        return f'username: {self.username}, is_quiz_creator: {self.quiz_creator}'
+        return f'Username: {self.username};\n Is_quiz_creator: {self.quiz_creator};'
 
+    @property
     def get_username(self):
         return self.username
-
-    @property
-    def is_stuff(self):
-        return self.staff
-
-    @property
-    def is_admin(self):
-        return self.admin
 
     @property
     def is_quiz_creator(self):
         return self.quiz_creator
 
-# class UserManager(BaseUserManager):
-#     def create_user(self, username, email, password=None, is_active=True, is_admin=False, is_stuff=False):
-#         if not username:
-#             raise ValueError('Users must have an username')
-#         if not password:
-#             raise ValueError('Users must have password')
-#
-#         user = self.model(
-#
-#         )
+    @property
+    def is_active(self):
+        return self.active

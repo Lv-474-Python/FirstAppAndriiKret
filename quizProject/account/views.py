@@ -5,7 +5,9 @@ from .models import CustomUser
 
 
 def index(request):
-    return render(request, 'base.html')
+    return render(request, 'base.html', {
+        'user_logged': request.user.is_authenticated
+    })
 
 
 def log_in(request):
@@ -23,17 +25,19 @@ def log_in(request):
 
 def register(request):
     ''' used to create users and send to db'''
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    user = CustomUser.create_user(username, password)
-    if user:
-        return HttpResponse('user added')
-    return render(request, 'register.html')
+    if request.user.is_authenticated:
+        return redirect('user list')
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        custom_user = CustomUser.create_user(username, password)
+        if custom_user:
+            return redirect(log_in)
+        return render(request, 'register.html')
 
 
 def user_list(request):
     ''' returns list of users from db'''
-
     return render(request, 'user_list.html',
                   {
                       'user_list': CustomUser.objects.all(),
