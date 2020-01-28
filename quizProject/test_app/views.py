@@ -39,21 +39,22 @@ def add_options_to_question(request,id_question):
     answer_amount = current_question.answers_amount
 
     if request.method == 'POST':
-        answer_text = request.POST.get('answer_text')
-        is_correct = request.POST.get('is_correct')
-        print(is_correct)
+        for i in range(1, answer_amount+1):
+            answer_text = request.POST.get(f'answer_text_{i}')
+            is_correct = request.POST.get(f'is_correct_{i}')
+            print(answer_text)
 
-        if is_correct is None:
-            is_correct = False
-        else:
-            is_correct = True
+            if is_correct is None:
+                is_correct = False
+            else:
+                is_correct = True
 
-        answer = AnswerOption.create_answer(question=current_question, answer_text=answer_text, is_correct=is_correct)
-        if answer:
-            return HttpResponse('Answer added')
+            answer = AnswerOption.create_answer(question=current_question, answer_text=answer_text, is_correct=is_correct)
+            if i == answer_amount :
+                return HttpResponse('Answers added')
     print(answer_amount)
 
     return render(request, 'add_answers.html', {
         'id_question': id_question,
-        'answer_amount': answer_amount,
+        'answer_amount': list(range(1,answer_amount+1)),
     })

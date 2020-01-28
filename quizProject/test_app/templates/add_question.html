@@ -4,12 +4,10 @@
 {% block content %}
 <div>
     <form action="" method="POST">
-
-
         {% csrf_token%}
         <p>Question text: <input type="text" name="question_text" placeholder="question text"></p>
         <p>Amount of answers: <input type="number" name="answers_amount"></p>
-        <p><input type="checkbox" name="one_correct_answer">Only one correct answer?</p>
+        <p><input type="checkbox" name="one_correct_answer"> Only one correct answer? </p>
         <p><input type="submit" value="add question to "></p>
 
     </form>
