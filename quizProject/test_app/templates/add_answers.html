@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}add answers{% endblock %}
+{% block content %}
+<div>
+    <form action="" method="POST">
+        {% csrf_token%}
+        <p>Answer: <input type="text" name="answer_text" placeholder="answer text"></p>
+        <p><input type="checkbox" name="is_correct">Is correct?</p>
+        <p><input type="submit" value="add question to "></p>
+
+    </form>
+</div>
+{% endblock %}

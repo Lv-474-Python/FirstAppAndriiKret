@@ -5,9 +5,7 @@ from .models import CustomUser
 
 
 def index(request):
-    return render(request, 'base.html', {
-        'user_logged': request.user.is_authenticated
-    })
+    return render(request, 'base.html')
 
 
 def log_in(request):

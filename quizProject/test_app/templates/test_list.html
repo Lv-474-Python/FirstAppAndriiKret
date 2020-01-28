@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}User list{% endblock %}
+{% block content %}
+
+{%for i in list%}
+<p>{{i}}</p>
+<form action="{% url 'add_question' id_test=i.id%}">
+    <input type="submit" value="+">
+</form>
+{% endfor %}
+
+{% endblock%}

@@ -19,9 +19,12 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
-            {% if user_logged%}
+            {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="log_out">logout</a>
+                <a class="nav-link" href="create_quiz">Create quiz</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="log_out">Logout</a>
             </li>
             {% else%}
             <li class="nav-item">
