@@ -41,13 +41,13 @@ def add_options_to_question(request,id_question):
     if request.method == 'POST':
         for i in range(1, answer_amount+1):
             answer_text = request.POST.get(f'answer_text_{i}')
-            is_correct = request.POST.get(f'is_correct_{i}')
-            print(answer_text)
+            is_correct = request.POST.get(f'is_correct')
+            print(is_correct)
 
-            if is_correct is None:
-                is_correct = False
-            else:
+            if is_correct == f'{i}':
                 is_correct = True
+            else:
+                is_correct = False
 
             answer = AnswerOption.create_answer(question=current_question, answer_text=answer_text, is_correct=is_correct)
             if i == answer_amount :
