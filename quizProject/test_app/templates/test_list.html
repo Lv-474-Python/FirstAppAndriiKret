@@ -4,10 +4,8 @@
 {% block content %}
 
 {%for i in list%}
-<p>{{i}}</p>
-<form action="{% url 'add_question' id_test=i.id%}">
-    <input type="submit" value="+">
-</form>
+<p>{{i}}
+    <button><a href="{% url 'add_question' id_test=i.id%}">add question</a></button></p>
 {% endfor %}
 
 {% endblock%}

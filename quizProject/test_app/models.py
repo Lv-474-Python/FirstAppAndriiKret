@@ -11,6 +11,7 @@ class TestQuiz(models.Model):
         test_quiz = TestQuiz(creator_id=creator_id, test_name=test_name)
         try:
             test_quiz.save()
+            return test_quiz
         except (ValueError, IntegrityError):
             return None
 
@@ -53,6 +54,7 @@ class TestQuestionUnion(models.Model):
     test = models.ForeignKey(TestQuiz, on_delete=models.CASCADE, null=True)
     question = models.ForeignKey(Questions, on_delete=models.CASCADE, null=True)
 
+    @staticmethod
     def create_union(test, question):
         union = TestQuestionUnion(test=test, question=question)
         try:
