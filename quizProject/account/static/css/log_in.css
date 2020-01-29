@@ -2,7 +2,7 @@
 /*@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);*/
 
 body {
-  background: #5C821A;
+  background: #FFF8DC;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -25,11 +25,11 @@ body {
   margin-right: auto;
   margin-left: auto;
   border: 12px solid transparent;
-  border-bottom-color: #0F1B07;
+  border-bottom-color: #DC143C;
 }
 
 .login-header {
-  background: #0F1B07;
+  background: #DC143C;
   padding: 20px;
   font-size: 1.4em;
   font-weight: normal;
@@ -39,7 +39,7 @@ body {
 }
 
 .login-container {
-  background: #C6D166;
+  background: #FA8072;
   padding: 12px;
 }
 
@@ -74,9 +74,9 @@ body {
 }
 
 .login input[type="submit"] {
-  background: #e6df44;
+  background: #8B0000;
   border-color: transparent;
-  color: #0F1B07;
+  color: whitesmoke;
   cursor: pointer;
 }
 
