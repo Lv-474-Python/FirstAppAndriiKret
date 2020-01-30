@@ -3,9 +3,32 @@
 {% block title %}User list{% endblock %}
 {% block content %}
 
-{%for i in list%}
-<p>{{i}}
-    <button><a href="{% url 'add_question' id_test=i.id%}">add question</a></button></p>
-{% endfor %}
+<div class="container">
+    <table class="table table-hover">
+        <thead class=" bg-primary">
+        <tr>
+            <th colspan="4">Test name:</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for i in list%}
+        <tr>
+            <td class="col-8">{{i}}</td>
+            <td><a href="{% url 'view_test' id_test=i.id%}" class="btn btn-outline-primary btn-sm">View</a></td>
+            <td><a href="{% url 'add_question' id_test=i.id%}" class="btn btn-outline-primary btn-sm">Add question</a>
+            <td><a href="{% url 'delete_quiz' id_test=i.id%}" class="delete_class btn btn-outline-danger btn-sm">delete
+                test</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    $(document).on('click', '.delete_class', function () {
+        return confirm('Are you sure you want to update this?');
+    })
+</script>
 
 {% endblock%}

@@ -6,7 +6,8 @@ from .models import TestQuiz, Questions, AnswerOption, TestQuestionUnion
 
 @login_required
 def tests_list(request):
-    users_tests = TestQuiz.objects.filter(creator_id_id=request.user.id)
+    users_tests = TestQuiz.objects.filter(creator_id=request.user.id)
+    print(users_tests)
     return render(request, 'test_list.html', {'list': users_tests})
 
 
@@ -18,6 +19,17 @@ def create_quiz(request):
         if test:
             return redirect('test_list')
     return render(request, 'quiz_creator.html')
+
+
+@login_required
+def delete_quiz(request, id_test):
+    TestQuiz.objects.filter(id=id_test, creator_id=request.user.id).delete()
+    return redirect('test_list')
+
+
+@login_required
+def view_test(request, id_test):
+    return HttpResponse('салам все кто ходит с нами под одним солнцем, всем переулкам и дворам')
 
 
 @login_required
