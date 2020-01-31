@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser' #changes django user by custom
+LOGIN_URL = '/log_in'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

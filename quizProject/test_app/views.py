@@ -7,7 +7,6 @@ from .models import TestQuiz, Questions, AnswerOption, TestQuestionUnion
 @login_required
 def tests_list(request):
     users_tests = TestQuiz.objects.filter(creator_id=request.user.id)
-    print(users_tests)
     return render(request, 'test_list.html', {'list': users_tests})
 
 
@@ -27,9 +26,30 @@ def delete_quiz(request, id_test):
     return redirect('test_list')
 
 
-@login_required
+@login_required()
 def view_test(request, id_test):
-    return HttpResponse('салам все кто ходит с нами под одним солнцем, всем переулкам и дворам')
+    union = TestQuestionUnion.objects.filter(test_id=id_test)
+    # questions = []
+    # for i in union:
+    #     questions.append(Questions.objects.get(id=i.question_id))
+    # answers = []
+    # for i in questions:
+    #     current_answer = []
+    #     for j in AnswerOption.objects.filter(question_id=i.id):
+    #         current_answer.append(j)
+    #     answers.append(current_answer)
+    # print(len(questions))
+    # print(len(answers))
+    # amount = list(range(len(questions)))
+    # print(amount)
+    print(union)
+    q_a = []
+    for i in union:
+        q = Questions.objects.get(id=i.question_id)
+        q_a.append({'q': q, 'ao': q.answeroption_set.all()})
+    # return HttpResponse('kek')
+    print(q_a)
+    return render(request, 'view_text.html', {'q_a': q_a})
 
 
 @login_required

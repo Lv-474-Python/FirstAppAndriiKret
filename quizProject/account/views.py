@@ -10,21 +10,21 @@ def index(request):
 
 def log_in(request):
     if request.user.is_authenticated:
-        return redirect('user list')
+        return redirect('user_list')
     else:
         username = request.POST.get('username')
         password = request.POST.get('password')
         current_user = authenticate(username=username, password=password)
         if current_user and current_user.is_active:
             login(request, current_user)
-            return redirect('user list')
+            return redirect('user_list')
         return render(request, 'log_in.html')
 
 
 def register(request):
     ''' used to create users and send to db'''
     if request.user.is_authenticated:
-        return redirect('user list')
+        return redirect('user_list')
     else:
         username = request.POST.get('username')
         password = request.POST.get('password')

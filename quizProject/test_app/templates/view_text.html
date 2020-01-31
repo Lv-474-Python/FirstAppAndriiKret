@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}View text{% endblock %}
+{% block content %}
+
+<div class="table-responsive-sm">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th colspan="12">Question:</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for el in q_a%}
+        <tr>
+            <td colspan="12">{{el.q}}</td>
+        </tr>
+        <tr>
+            {%for j in el.ao%}
+            <td>{{j}}</td>
+            {% endfor%}
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock%}

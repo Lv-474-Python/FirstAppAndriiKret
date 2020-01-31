@@ -16,7 +16,7 @@ class TestQuiz(models.Model):
             return None
 
     def __str__(self):
-        return f'Test name: {self.test_name}'
+        return f'Test name: {self.test_name};'
 
 
 class Questions(models.Model):
@@ -41,6 +41,9 @@ class AnswerOption(models.Model):
     answer_text = models.CharField(max_length=50)
     is_correct = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'{self.answer_text}'
+
     def create_answer(question, answer_text, is_correct):
         answer = AnswerOption(question_id=question, answer_text=answer_text, is_correct=is_correct)
         try:
@@ -51,8 +54,11 @@ class AnswerOption(models.Model):
 
 
 class TestQuestionUnion(models.Model):
-    test = models.ForeignKey(TestQuiz, on_delete=models.CASCADE, null=True)
+    test = models.ForeignKey(TestQuiz, on_delete=models.SET_NULL, null=True)
     question = models.ForeignKey(Questions, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'{self.test};{self.question}'
 
     @staticmethod
     def create_union(test, question):
