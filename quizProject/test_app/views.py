@@ -28,28 +28,18 @@ def delete_quiz(request, id_test):
 
 @login_required()
 def view_test(request, id_test):
+    current_test = TestQuiz.objects.get(id=id_test)
     union = TestQuestionUnion.objects.filter(test_id=id_test)
-    # questions = []
-    # for i in union:
-    #     questions.append(Questions.objects.get(id=i.question_id))
-    # answers = []
-    # for i in questions:
-    #     current_answer = []
-    #     for j in AnswerOption.objects.filter(question_id=i.id):
-    #         current_answer.append(j)
-    #     answers.append(current_answer)
-    # print(len(questions))
-    # print(len(answers))
-    # amount = list(range(len(questions)))
-    # print(amount)
     print(union)
     q_a = []
     for i in union:
         q = Questions.objects.get(id=i.question_id)
-        q_a.append({'q': q, 'ao': q.answeroption_set.all()})
-    # return HttpResponse('kek')
+        q_a.append({
+            'q': q,
+            'ao': q.answeroption_set.all()
+        })
     print(q_a)
-    return render(request, 'view_text.html', {'q_a': q_a})
+    return render(request, 'view_text.html', {'q_a': q_a, 'current_test': current_test})
 
 
 @login_required

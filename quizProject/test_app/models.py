@@ -16,7 +16,7 @@ class TestQuiz(models.Model):
             return None
 
     def __str__(self):
-        return f'Test name: {self.test_name};'
+        return f'{self.test_name}'
 
 
 class Questions(models.Model):
@@ -25,7 +25,7 @@ class Questions(models.Model):
     one_correct_answer = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'Question text: {self.question_text}'
+        return f'{self.question_text}'
 
     def create_question(question_text, answers_amount, one_correct_answer):
         question = Questions(question_text=question_text, answers_amount=answers_amount)

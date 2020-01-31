@@ -4,23 +4,24 @@
 {% block content %}
 
 <div class="table-responsive-sm">
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-dark">
         <thead>
         <tr>
-            <th colspan="12">Question:</th>
+            <th colspan="12" class="text-center">{{current_test}}</th>
         </tr>
         </thead>
         <tbody>
         {%for el in q_a%}
-        <tr>
-            <td colspan="12">{{el.q}}</td>
+        <tr class="bg-success">
+            <td colspan="12" class="text-center">{{ forloop.counter }} : {{el.q}}</td>
         </tr>
-        <tr>
+        <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
             {%for j in el.ao%}
-            <td>{{j}}</td>
+            <td style="width: 100%;"><input type="radio" name="{{el.q.id}}">  {{j}}</input></td>
             {% endfor%}
 
         </tr>
+
         {% endfor %}
         </tbody>
     </table>
