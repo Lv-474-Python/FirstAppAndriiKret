@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import TestQuiz, Questions, AnswerOption, TestQuestionUnion
+from random import shuffle
 
 
 @login_required
@@ -26,20 +27,23 @@ def delete_quiz(request, id_test):
     return redirect('test_list')
 
 
+def quiz_passing(request, id_test):
+    questions_and_answers = _get_test(id_test)
+    shuffle(questions_and_answers)
+    return render(request, 'quiz_passing.html', {
+        'questions_and_answers': questions_and_answers[:10],
+        'current_test': TestQuiz.get_name_by_id(id_test)
+    })
+
+
 @login_required()
 def view_test(request, id_test):
-    current_test = TestQuiz.objects.get(id=id_test)
-    union = TestQuestionUnion.objects.filter(test_id=id_test)
-    print(union)
-    q_a = []
-    for i in union:
-        q = Questions.objects.get(id=i.question_id)
-        q_a.append({
-            'q': q,
-            'ao': q.answeroption_set.all()
-        })
-    print(q_a)
-    return render(request, 'view_text.html', {'q_a': q_a, 'current_test': current_test})
+    questions_and_answers = _get_test(id_test)
+    return render(request, 'view_text.html', {
+        'questions_and_answers': questions_and_answers,
+        # TODO in models create get name by id method-----------------------------------------------Check
+        'current_test': TestQuiz.get_name_by_id(id_test)
+    })
 
 
 @login_required
@@ -85,3 +89,16 @@ def add_options_to_question(request, id_question):
         'id_question': id_question,
         'answer_amount': list(range(1, answer_amount + 1)),
     })
+
+
+def _get_test(id_test):
+    # current_test = TestQuiz.objects.get(id=id_test)
+    union = TestQuestionUnion.objects.filter(test_id=id_test)
+    questions_and_answers = []
+    for i in union:
+        q = Questions.objects.get(id=i.question_id)
+        questions_and_answers.append({
+            'question': q,
+            'answer_option': q.answeroption_set.all()
+        })
+    return questions_and_answers

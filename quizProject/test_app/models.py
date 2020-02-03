@@ -18,6 +18,11 @@ class TestQuiz(models.Model):
     def __str__(self):
         return f'{self.test_name}'
 
+    @staticmethod
+    def get_name_by_id(id_test):
+        current_test = TestQuiz.objects.get(id=id_test)
+        return current_test.test_name
+
 
 class Questions(models.Model):
     question_text = models.CharField(max_length=100)

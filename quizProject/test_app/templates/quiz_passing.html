@@ -17,7 +17,7 @@
         </tr>
         <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
             {%for j in el.answer_option%}
-            <td style="width: 100%;"><p> {{j}}</p></td>
+            <td style="width: 100%;"><input type="radio" name="{{el.q.id}}" value="{{j.id}}">(question_id = {{el.q.id}} ; answer_id = {{j.id}} ;)<br> {{j}}</input></td>
             {% endfor%}
 
         </tr>
