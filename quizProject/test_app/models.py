@@ -23,6 +23,13 @@ class TestQuiz(models.Model):
         current_test = TestQuiz.objects.get(id=id_test)
         return current_test.test_name
 
+    @staticmethod
+    def delete_quiz(id_test, user_id):
+        try:
+            TestQuiz.objects.filter(id=id_test, creator_id=user_id).delete()
+        except (ValueError, IntegrityError):
+            return None
+
 
 class Questions(models.Model):
     question_text = models.CharField(max_length=100)

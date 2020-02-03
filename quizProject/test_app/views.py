@@ -23,7 +23,8 @@ def create_quiz(request):
 
 @login_required
 def delete_quiz(request, id_test):
-    TestQuiz.objects.filter(id=id_test, creator_id=request.user.id).delete()
+    user_id = request.user.id
+    TestQuiz.delete_quiz(id_test, user_id)
     return redirect('test_list')
 
 
@@ -41,7 +42,6 @@ def view_test(request, id_test):
     questions_and_answers = _get_test(id_test)
     return render(request, 'view_text.html', {
         'questions_and_answers': questions_and_answers,
-        # TODO in models create get name by id method-----------------------------------------------Check
         'current_test': TestQuiz.get_name_by_id(id_test)
     })
 
