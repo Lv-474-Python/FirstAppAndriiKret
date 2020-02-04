@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'test_app',
+    'passing_test',
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser' #changes django user by custom
