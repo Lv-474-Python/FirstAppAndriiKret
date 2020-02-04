@@ -16,8 +16,11 @@
             <td colspan="12" class="text-center">{{ forloop.counter }} : {{el.question}}</td>
         </tr>
         <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
+            {% if not el.answer_option%}
+            <td style="width: 100%;"><p class="text-xs-center">No answers</p></td>
+            {% endif%}
             {%for j in el.answer_option%}
-            <td style="width: 100%;"><p> {{j}}</p></td>
+            <td style="width: 100%;"><p class="text-xs-center"> {{j}}</p></td>
             {% endfor%}
 
         </tr>

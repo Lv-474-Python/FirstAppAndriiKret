@@ -1,8 +1,9 @@
+from random import shuffle
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+
 from .models import TestQuiz, Questions, AnswerOption, TestQuestionUnion
-from random import shuffle
 
 
 @login_required
@@ -40,7 +41,7 @@ def quiz_passing(request, id_test):
 @login_required()
 def view_test(request, id_test):
     questions_and_answers = _get_test(id_test)
-    return render(request, 'view_text.html', {
+    return render(request, 'view_test.html', {
         'questions_and_answers': questions_and_answers,
         'current_test': TestQuiz.get_name_by_id(id_test)
     })
@@ -69,15 +70,13 @@ def add_options_to_question(request, id_question):
     answer_amount = current_question.answers_amount
 
     if request.method == 'POST':
+        is_correct = request.POST.get('is_correct')
         for i in range(1, answer_amount + 1):
             answer_text = request.POST.get(f'answer_text_{i}')
-            is_correct = request.POST.get(f'is_correct')
+
             print(is_correct)
 
-            if is_correct == f'{i}':
-                is_correct = True
-            else:
-                is_correct = False
+            is_correct = is_correct == f'{i}'
 
             AnswerOption.create_answer(question=current_question, answer_text=answer_text,
                                        is_correct=is_correct)
@@ -96,9 +95,9 @@ def _get_test(id_test):
     union = TestQuestionUnion.objects.filter(test_id=id_test)
     questions_and_answers = []
     for i in union:
-        q = Questions.objects.get(id=i.question_id)
+        question = Questions.objects.get(id=i.question_id)
         questions_and_answers.append({
-            'question': q,
-            'answer_option': q.answeroption_set.all()
+            'question': question,
+            'answer_option': question.answeroption_set.all()
         })
     return questions_and_answers

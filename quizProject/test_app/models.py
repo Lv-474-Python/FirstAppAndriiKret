@@ -7,6 +7,7 @@ class TestQuiz(models.Model):
     creator_id = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     test_name = models.CharField(max_length=30)
 
+    @staticmethod
     def create_test_quiz(creator_id, test_name):
         test_quiz = TestQuiz(creator_id=creator_id, test_name=test_name)
         try:
@@ -32,13 +33,14 @@ class TestQuiz(models.Model):
 
 
 class Questions(models.Model):
-    question_text = models.CharField(max_length=100)
+    question_text = models.CharField(max_length=100, unique=True)
     answers_amount = models.IntegerField(default=4)
     one_correct_answer = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.question_text}'
 
+    @staticmethod
     def create_question(question_text, answers_amount, one_correct_answer):
         question = Questions(question_text=question_text, answers_amount=answers_amount)
         try:
@@ -46,6 +48,9 @@ class Questions(models.Model):
             return question
         except (ValueError, IntegrityError):
             return None
+
+    def check_created_answer_amount(self):
+        return self.answers_amount == len(self.answeroption_set.all())
 
 
 class AnswerOption(models.Model):
@@ -56,6 +61,7 @@ class AnswerOption(models.Model):
     def __str__(self):
         return f'{self.answer_text}'
 
+    @staticmethod
     def create_answer(question, answer_text, is_correct):
         answer = AnswerOption(question_id=question, answer_text=answer_text, is_correct=is_correct)
         try:
