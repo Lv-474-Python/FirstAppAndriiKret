@@ -16,8 +16,10 @@ Including another URLconf
 from django.urls import path, include
 from account import urls as acc_urls
 from test_app import urls as quiz_urls
+from passing_test import urls as pass_t_url
 
 urlpatterns = [
     path('', include(acc_urls)),
     path('', include(quiz_urls)),
+    path('', include(pass_t_url)),
 ]

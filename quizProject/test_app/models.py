@@ -7,6 +7,8 @@ class TestQuiz(models.Model):
     creator_id = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     test_name = models.CharField(max_length=30)
 
+    objects = models.Manager()
+
     @staticmethod
     def create_test_quiz(creator_id, test_name):
         test_quiz = TestQuiz(creator_id=creator_id, test_name=test_name)
@@ -37,6 +39,8 @@ class Questions(models.Model):
     answers_amount = models.IntegerField(default=4)
     one_correct_answer = models.BooleanField(default=True)
 
+    objects = models.Manager()
+
     def __str__(self):
         return f'{self.question_text}'
 
@@ -58,6 +62,8 @@ class AnswerOption(models.Model):
     answer_text = models.CharField(max_length=50)
     is_correct = models.BooleanField(default=False)
 
+    objects = models.Manager()
+
     def __str__(self):
         return f'{self.answer_text}'
 
@@ -74,6 +80,8 @@ class AnswerOption(models.Model):
 class TestQuestionUnion(models.Model):
     test = models.ForeignKey(TestQuiz, on_delete=models.SET_NULL, null=True)
     question = models.ForeignKey(Questions, on_delete=models.CASCADE, null=True)
+
+    objects = models.Manager()
 
     def __str__(self):
         return f'{self.test};{self.question}'

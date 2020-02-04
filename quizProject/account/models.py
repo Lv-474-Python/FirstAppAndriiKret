@@ -14,7 +14,7 @@ class CustomUser(AbstractBaseUser):
     USERNAME_FIELD = 'username'
     objects = BaseUserManager()
 
-
+    @staticmethod
     def create_user(username, password):
         user = CustomUser(username=username, password=password)
         user.set_password(password)

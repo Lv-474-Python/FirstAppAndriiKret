@@ -1,8 +1,7 @@
-from random import shuffle
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from util.get_object_list_by_id import get_open_test
 from .models import TestQuiz, Questions, AnswerOption, TestQuestionUnion
 
 
@@ -29,18 +28,9 @@ def delete_quiz(request, id_test):
     return redirect('test_list')
 
 
-def quiz_passing(request, id_test):
-    questions_and_answers = _get_test(id_test)
-    shuffle(questions_and_answers)
-    return render(request, 'quiz_passing.html', {
-        'questions_and_answers': questions_and_answers[:10],
-        'current_test': TestQuiz.get_name_by_id(id_test)
-    })
-
-
 @login_required()
 def view_test(request, id_test):
-    questions_and_answers = _get_test(id_test)
+    questions_and_answers = get_open_test(id_test)
     return render(request, 'view_test.html', {
         'questions_and_answers': questions_and_answers,
         'current_test': TestQuiz.get_name_by_id(id_test)
@@ -89,15 +79,14 @@ def add_options_to_question(request, id_question):
         'answer_amount': list(range(1, answer_amount + 1)),
     })
 
-
-def _get_test(id_test):
-    # current_test = TestQuiz.objects.get(id=id_test)
-    union = TestQuestionUnion.objects.filter(test_id=id_test)
-    questions_and_answers = []
-    for i in union:
-        question = Questions.objects.get(id=i.question_id)
-        questions_and_answers.append({
-            'question': question,
-            'answer_option': question.answeroption_set.all()
-        })
-    return questions_and_answers
+# def _get_test(id_test):
+#     # current_test = TestQuiz.objects.get(id=id_test)
+#     union = TestQuestionUnion.objects.filter(test_id=id_test)
+#     questions_and_answers = []
+#     for i in union:
+#         question = Questions.objects.get(id=i.question_id)
+#         questions_and_answers.append({
+#             'question': question,
+#             'answer_option': question.answeroption_set.all()
+#         })
+#     return questions_and_answers
