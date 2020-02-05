@@ -12,25 +12,33 @@ def log_in(request):
     if request.user.is_authenticated:
         return redirect('user_list')
     else:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        current_user = authenticate(username=username, password=password)
-        if current_user and current_user.is_active:
-            login(request, current_user)
-            return redirect('user_list')
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            if CustomUser.user_exist(username):
+                current_user = authenticate(username=username, password=password)
+                if current_user and current_user.is_active:
+                    login(request, current_user)
+                    return redirect('user_list')
+                else:
+                    return render(request, 'log_in.html', {'wrong_password': True})
+            return render(request, 'log_in.html', {'user_dont_exist': True})
         return render(request, 'log_in.html')
 
 
 def register(request):
-    ''' used to create users and send to db'''
+    """ used to create users and send to db"""
     if request.user.is_authenticated:
         return redirect('user_list')
     else:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        custom_user = CustomUser.create_user(username, password)
-        if custom_user:
-            return redirect(log_in)
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            if not CustomUser.user_exist(username):
+                custom_user = CustomUser.create_user(username, password)
+                if custom_user:
+                    return redirect(log_in)
+            return render(request, 'register.html', {'user_exist': True})
         return render(request, 'register.html')
 
 

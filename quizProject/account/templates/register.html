@@ -3,16 +3,19 @@
 {% block title %}Create an Account{% endblock %}
 
 {% block content %}
-    <div class="login">
-  <div class="login-triangle"></div>
+<div class="login">
+    <div class="login-triangle"></div>
 
-  <h2 class="login-header">Register</h2>
+    <h2 class="login-header">Register</h2>
 
-  <form class="login-container" action='' method="POST">
-	  {% csrf_token%}
-    <p><input type="text" placeholder="Username" name="username"></p>
-    <p><input type="password" placeholder="Password" name="password"></p>
-    <p><input type="submit" value="Register"></p>
-  </form>
+    <form class="login-container" action='' method="POST">
+        {% csrf_token%}
+        <p><input type="text" placeholder="Username" name="username" required></p>
+        {% if user_exist%}
+        <p class="warning">User already exist</p>
+        {% endif%}
+        <p><input type="password" placeholder="Password" name="password" required></p>
+        <p><input type="submit" value="Register"></p>
+    </form>
 </div>
 {% endblock %}

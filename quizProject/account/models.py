@@ -24,6 +24,14 @@ class CustomUser(AbstractBaseUser):
         except (ValueError, IntegrityError):
             return None
 
+    @staticmethod
+    def user_exist(username):
+        try:
+            CustomUser.objects.get(username=username)
+            return True
+        except CustomUser.DoesNotExist:
+            return False
+
     def __str__(self):
         return f'Username: {self.username};\n Is_quiz_creator: {self.quiz_creator};'
 
