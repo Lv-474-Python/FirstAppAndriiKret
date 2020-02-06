@@ -54,6 +54,7 @@ class Questions(models.Model):
             return None
 
     def check_created_answer_amount(self):
+        print(self.answeroption_set.all())
         return self.answers_amount == len(self.answeroption_set.all())
 
 

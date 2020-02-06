@@ -16,10 +16,11 @@
             <td colspan="12" class="text-center">{{ forloop.counter }} : {{el.question}}</td>
         </tr>
         <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
-            {% if not el.answer_option%}
-            <td style="width: 100%;"><p class="text-xs-center">No answers</p></td>
+            {% if not el.answer_options%}
+            <td style="width: 100%;"><p class="text-xs-center">No answers created</p></td>
+            <td><a href="{% url 'add_option_answers' id_question=el.question.id %}">create</a></td>
             {% endif%}
-            {%for j in el.answer_option%}
+            {%for j in el.answer_options%}
             <td style="width: 100%;"><p class="text-xs-center"> {{j}}</p></td>
             {% endfor%}
 

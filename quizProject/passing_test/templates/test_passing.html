@@ -5,6 +5,7 @@
 
 <div class="table-responsive-sm">
     <form action="" method="POST">
+        {% csrf_token %}
         <table class="table table-bordered table-dark">
             <thead>
             <tr>
@@ -18,15 +19,19 @@
                 <td colspan="12" class="text-center">{{ forloop.counter }} : {{el.question}}</td>
             </tr>
             <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
-                {%for j in el.answer_option%}
-                <td style="width: 100%;"><input type="radio" name="{{el.question.id}}" value="{{j.id}}">(question_id =
-                    {{el.question.id}} ; answer_id = {{j.id}} ;)<br> {{j}}</input></td>
+                {%for j in el.answer_options%}
+                <td style="width: 100%;">
+                    <label>
+                        <input type="radio" name="{{el.question.id}}" value="{{j.id}}" required>{{j}}</input>
+                    </label>
+                </td>
                 {% endfor%}
 
             </tr>
             {% endfor %}
             </tbody>
         </table>
+        <input type="submit" value="Pass test">
     </form>
 </div>
 

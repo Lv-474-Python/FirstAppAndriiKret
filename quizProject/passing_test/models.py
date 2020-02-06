@@ -21,12 +21,13 @@ class UserAnswers(models.Model):
             return None
 
     @staticmethod
-    def create_user_answer_by_user_and_answer_id(user, answer_id):
+    def create_user_answer_by_user_and_ids(user, answer_id, test_id):
         try:
             current_answer = AnswerOption.objects.get(id=answer_id)
             current_question = Questions.objects.get(id=current_answer.question_id.id)
-            current_union = TestQuestionUnion.objects.get(question=current_question.id)
-            current_test = TestQuiz.objects.get(id=current_union.test.id)
+            current_test = TestQuiz.objects.get(id=test_id)
+            # current_union = TestQuestionUnion.objects.get(question=current_question.id)
+            # current_test = TestQuiz.objects.get(id=current_union.test.id)
             try:
                 UserAnswers.objects.get(user=user, test=current_test, question=current_question)
                 return print('answer already exist')
@@ -35,3 +36,8 @@ class UserAnswers(models.Model):
                 return users_choice
         except (IntegrityError, ValueError, TypeError):
             return None
+
+    @staticmethod
+    def get_test_result(user, test_id):
+        result_query = UserAnswers.objects.filter(user=user, test_id=test_id)
+        return result_query

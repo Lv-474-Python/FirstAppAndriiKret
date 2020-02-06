@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.http import Http404, HttpResponseForbidden, HttpResponse
 from django.shortcuts import render, redirect
 
-from util.get_object_list_by_id import get_open_test
+from util.get_object_list_by_id import get_full_test
 from .models import TestQuiz, Questions, AnswerOption, TestQuestionUnion
 
-
+# TODO create opportunity to add created questions
 @login_required
 def tests_list(request):
     users_tests = TestQuiz.objects.filter(creator_id=request.user.id)
@@ -30,7 +32,7 @@ def delete_quiz(request, id_test):
 
 @login_required()
 def view_test(request, id_test):
-    questions_and_answers = get_open_test(id_test)
+    questions_and_answers = get_full_test(id_test)
     return render(request, 'view_test.html', {
         'questions_and_answers': questions_and_answers,
         'current_test': TestQuiz.get_name_by_id(id_test)
@@ -39,33 +41,41 @@ def view_test(request, id_test):
 
 @login_required
 def add_question(request, id_test):
-    current_test = TestQuiz.objects.get(pk=id_test)
+    try:
+        current_test = TestQuiz.objects.get(pk=id_test)
+    except TestQuiz.DoesNotExist:
+        raise Http404('Such test don\'t exist')
+    if current_test.creator_id == request.user:
+        if request.method == "POST":
+            question_text = request.POST.get('question_text')
+            answers_amount = request.POST.get('answers_amount')
+            # one_correct_answer = request.POST.get('one_correct_answer')
+            try:
+                question = Questions.create_question(question_text, answers_amount, True)  # , one_correct_answer)
+                union = TestQuestionUnion.create_union(current_test, question)
+                if union:
+                    return redirect('add_option_answers', id_question=question.id)
+            except AttributeError:
+                error = True
+                return render(request, 'add_question.html', {'error': error})
 
-    if request.method == "POST":
-        question_text = request.POST.get('question_text')
-        answers_amount = request.POST.get('answers_amount')
-        one_correct_answer = request.POST.get('one_correct_answer')
-        question = Questions.create_question(question_text, answers_amount, one_correct_answer)
-        union = TestQuestionUnion.create_union(current_test, question)
-
-        if union:
-            return redirect('add_option_answers', id_question=question.id)
-
-    return render(request, 'add_question.html')
+        return render(request, 'add_question.html')
+    raise PermissionDenied()
 
 
 @login_required
 def add_options_to_question(request, id_question):
     current_question = Questions.objects.get(id=id_question)
+    # print(current_question.check_created_answer_amount())
+    if current_question.check_created_answer_amount():
+        return redirect('test_list')
     answer_amount = current_question.answers_amount
 
     if request.method == 'POST':
-        is_correct = request.POST.get('is_correct')
+
         for i in range(1, answer_amount + 1):
             answer_text = request.POST.get(f'answer_text_{i}')
-
-            print(is_correct)
-
+            is_correct = request.POST.get('is_correct')
             is_correct = is_correct == f'{i}'
 
             AnswerOption.create_answer(question=current_question, answer_text=answer_text,
