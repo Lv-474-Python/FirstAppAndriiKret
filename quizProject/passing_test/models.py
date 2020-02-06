@@ -41,3 +41,12 @@ class UserAnswers(models.Model):
     def get_test_result(user, test_id):
         result_query = UserAnswers.objects.filter(user=user, test_id=test_id)
         return result_query
+
+    @staticmethod
+    def do_user_passed_test(user, test_id):
+        try:
+            if UserAnswers.objects.filter(user=user, test=test_id):
+                return True
+            return False
+        except (IntegrityError, ValueError, TypeError):
+            return None

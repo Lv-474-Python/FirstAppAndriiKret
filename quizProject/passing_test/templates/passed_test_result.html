@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Title{% endblock %}
+{% block content %}
+<h1>{{test.test_name}}</h1>
+<h2>{{response}}</h2>
+<p>Mark {{mark}}/{{max_mark}}</p>
+<p>Final Grade: {{final_grade}}/{{max_final_grade}}</p>
+{% endblock %}
