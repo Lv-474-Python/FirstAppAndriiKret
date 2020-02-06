@@ -6,7 +6,7 @@
     <form action="" method="POST">
         {% csrf_token%}
         {% for i in answer_amount%}
-        <p>Answer {{i}}: <input type="text" name="answer_text_{{i}}" placeholder="answer text" required></p>
+        <p>Answer {{ forloop.counter }}: <input type="text" name="answer_text_{{i}}" placeholder="answer text" required></p>
         <p><input type="radio" name="is_correct" value="{{i}}" required>Is correct?</p>
         {%endfor%}
         <p><input type="submit" value="add question to"></p>

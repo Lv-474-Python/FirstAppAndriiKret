@@ -5,6 +5,7 @@
 <div class="d-flex justify-content-center ">
     <form action="" method="POST">
         {% csrf_token%}
+        {% if not no_questions%}
         <div class="form-group">
             <label>
                 <select name="selected_question">
@@ -15,6 +16,9 @@
             </label>
             <p><input type="submit" value="add question to"></p>
         </div>
+        {% else %}
+        <p>no questions available</p>
+        {% endif %}
     </form>
 </div>
 {% endblock %}

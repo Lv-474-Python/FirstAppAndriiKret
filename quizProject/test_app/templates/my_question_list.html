@@ -7,14 +7,14 @@
     <table class="table table-bordered table-dark">
         <thead>
         <tr>
-            <th colspan="12" class="text-center">{{current_test.test_name}}</th>
+            <th colspan="12" class="text-center">My questions</th>
         </tr>
         </thead>
         <tbody>
         {%for el in questions_and_answers%}
         <tr class="bg-success">
             <td colspan="6" class="text-center">{{ forloop.counter }} : {{el.question}}</td>
-            <td><a href="{% url 'delete_question_from_test' id_question=el.question.id id_test=current_test.id %}">delete question from test</a></td>
+            <td><a href="{% url 'permanent_delete_question' id_question=el.question.id%}">permanent_delete_question</a></td>
         </tr>
         <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
             {% if not el.answer_options%}

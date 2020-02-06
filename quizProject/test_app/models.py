@@ -33,6 +33,30 @@ class TestQuiz(models.Model):
         except (ValueError, IntegrityError):
             return None
 
+    @staticmethod
+    def get_test_by_id(id_test):
+        try:
+            test = TestQuiz.objects.get(id=id_test)
+            return test
+        except TestQuiz.DoesNotExist:
+            return None
+
+    @staticmethod
+    def check_author(id_test, user_id):
+        try:
+            TestQuiz.objects.get(id=id_test, creator_id=user_id)
+            return True
+        except TestQuiz.DoesNotExist:
+            return False
+
+    @staticmethod
+    def exist(id_test):
+        try:
+            TestQuiz.objects.get(pk=id_test)
+            return True
+        except TestQuiz.DoesNotExist:
+            return False
+
 
 class Questions(models.Model):
     question_text = models.CharField(max_length=100, unique=True)
@@ -53,6 +77,29 @@ class Questions(models.Model):
             return question
         except (ValueError, IntegrityError):
             return None
+
+    @staticmethod
+    def get_all_questions_by_creator_id(creator_id):
+        try:
+            all_questions = Questions.objects.filter(creator=creator_id)
+            return all_questions
+        except (ValueError, IntegrityError):
+            return None
+
+    @staticmethod
+    def delete_permanently(question_id):
+        try:
+            Questions.objects.get(id=question_id).delete()
+        except (ValueError, IntegrityError):
+            return None
+
+    @staticmethod
+    def check_author(id_question, user_id):
+        try:
+            Questions.objects.get(id=id_question, creator_id=user_id)
+            return True
+        except Questions.DoesNotExist:
+            return False
 
     def check_created_answer_amount(self):
         print(self.answeroption_set.all())
@@ -94,5 +141,12 @@ class TestQuestionUnion(models.Model):
         try:
             union.save()
             return union
+        except (ValueError, IntegrityError):
+            return None
+
+    @staticmethod
+    def delete_question_from_test(test, question):
+        try:
+            TestQuestionUnion.objects.get(test=test, question=question).delete()
         except (ValueError, IntegrityError):
             return None

@@ -5,7 +5,7 @@
 <div>
     <form action="" method="POST">
         {% csrf_token%}
-        <p><input type="text" name="test_name" placeholder="Name of test"></p>
+        <p><input type="text" name="test_name" placeholder="Name of test" maxlength="30"></p>
         <p><input type="submit" value="Create Test"></p>
 
     </form>
