@@ -14,7 +14,7 @@
         {%for el in questions_and_answers%}
         <tr class="bg-success">
             <td colspan="6" class="text-center">{{ forloop.counter }} : {{el.question}}</td>
-            <td><a href="{% url 'permanent_delete_question' id_question=el.question.id%}">permanent_delete_question</a></td>
+            <td><a href="{% url 'permanent_delete_question' id_question=el.question.id%}" class="delete_class">permanent_delete_question</a></td>
         </tr>
         <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
             {% if not el.answer_options%}
@@ -31,6 +31,12 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    $(document).on('click', '.delete_class', function () {
+        return confirm('Are you sure you want to DELETE this forever?');
+    })
+</script>
 
 
 {% endblock%}
