@@ -1,4 +1,4 @@
-from test_app.models import TestQuestionUnion, Questions
+from test_app.models import TestQuestionUnion, Questions, TestQuiz
 from passing_test.models import UserAnswers
 
 
@@ -40,9 +40,22 @@ def get_prepared_test(id_test):
     return prepared_test_list
 
 
+# TODO get grades by passing tests
 def get_grade_by_user_test_id(user, id_test):
+    test = TestQuiz.get_test_by_id(id_test)
     result = UserAnswers.get_test_result(user, id_test)
+    correct_answers = 0
+    max_correct_answer = len(result)
+    max_final_grade = 300.0
+    for i in result:
+        a = i.chosen_answer.is_correct
+        if a:
+            correct_answers += 1
+    final_grade = (correct_answers / max_correct_answer) * max_final_grade
 
-
-
-
+    return {'test': test,
+            'mark': correct_answers,
+            'max_mark': max_correct_answer,
+            'final_grade': final_grade,
+            'max_final_grade': max_final_grade,
+            }

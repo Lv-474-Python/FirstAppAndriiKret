@@ -1,9 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}Title{% endblock %}
+{% block title %}Test result{% endblock %}
 {% block content %}
-<h1>{{test.test_name}}</h1>
-<h2>{{response}}</h2>
-<p>Mark {{mark}}/{{max_mark}}</p>
-<p>Final Grade: {{final_grade}}/{{max_final_grade}}</p>
+<div class="container">
+<table class="table">
+    <thead class="">
+    <tr>
+        <th colspan="4">Test name</th>
+        <th colspan="4">Mark</th>
+        <th colspan="4">Grade</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="4">{{test.test_name}}</td>
+        <td colspan="4">{{mark}}/{{max_mark}}</td>
+        <td colspan="4">{{final_grade}} / {{max_final_grade}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<div class="container">
+    <a href="{% url 'my_test_results' %}" class="btn btn-outline-primary btn-sm btn-block">Go to my results</a>
+</div>
 {% endblock %}

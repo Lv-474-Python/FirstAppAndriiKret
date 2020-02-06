@@ -31,6 +31,9 @@
                 <a class="nav-link" href="{% url 'create_quiz' %}">Create quiz</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="">{{user.username}}</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'log_out' %}">Logout</a>
             </li>
             {% else%}
@@ -45,7 +48,12 @@
     </div>
 </nav>
 {% block content %}
-<h1>Welcome!</h1>
+<div class="container">
+    <div class="d-flex justify-content-center">
+    <h1>Welcome to TestQuiz!</h1>
+    </div>
+</div>
+
 {% endblock %}
 </body>
 </html>

@@ -50,3 +50,22 @@ class UserAnswers(models.Model):
             return False
         except (IntegrityError, ValueError, TypeError):
             return None
+
+    @staticmethod
+    def get_available_tests(user):
+        all_tests = TestQuiz.objects.all()
+        available_tests = []
+        for i in all_tests:
+            if UserAnswers.do_user_passed_test(user, i):
+                continue
+            available_tests.append(i)
+        return available_tests
+
+    @staticmethod
+    def get_passed_test(user):
+        all_tests = TestQuiz.objects.all()
+        available_tests = []
+        for i in all_tests:
+            if UserAnswers.do_user_passed_test(user, i):
+                available_tests.append(i)
+        return available_tests
