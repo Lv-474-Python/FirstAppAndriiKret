@@ -43,3 +43,6 @@ def get_prepared_test(id_test):
 def get_grade_by_user_test_id(user, id_test):
     result = UserAnswers.get_test_result(user, id_test)
 
+
+
+

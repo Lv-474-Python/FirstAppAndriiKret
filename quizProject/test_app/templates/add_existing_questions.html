@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}add question{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center ">
+    <form action="" method="POST">
+        {% csrf_token%}
+        <div class="form-group">
+            <label>
+                <select name="selected_question">
+                    {% for i in questions%}
+                    <option>{{i}}</option>
+                    {% endfor%}
+                </select>
+            </label>
+            <p><input type="submit" value="add question to"></p>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from util.get_object_list_by_id import get_full_test
 from .models import TestQuiz, Questions, AnswerOption, TestQuestionUnion
 
+
 # TODO create opportunity to add created questions
 @login_required
 def tests_list(request):
@@ -51,7 +52,8 @@ def add_question(request, id_test):
             answers_amount = request.POST.get('answers_amount')
             # one_correct_answer = request.POST.get('one_correct_answer')
             try:
-                question = Questions.create_question(question_text, answers_amount, True)  # , one_correct_answer)
+                question = Questions.create_question(request.user, question_text,
+                                                     answers_amount)  # , one_correct_answer)
                 union = TestQuestionUnion.create_union(current_test, question)
                 if union:
                     return redirect('add_option_answers', id_question=question.id)
@@ -89,14 +91,19 @@ def add_options_to_question(request, id_question):
         'answer_amount': list(range(1, answer_amount + 1)),
     })
 
-# def _get_test(id_test):
-#     # current_test = TestQuiz.objects.get(id=id_test)
-#     union = TestQuestionUnion.objects.filter(test_id=id_test)
-#     questions_and_answers = []
-#     for i in union:
-#         question = Questions.objects.get(id=i.question_id)
-#         questions_and_answers.append({
-#             'question': question,
-#             'answer_option': question.answeroption_set.all()
-#         })
-#     return questions_and_answers
+
+def add_my_existing_questions(request, id_test):
+    # TODO check author--------------------------
+    all_my_questions = Questions.objects.filter(creator=request.user)
+    available = set()
+    for i in all_my_questions:
+        if not TestQuestionUnion.objects.filter(test=id_test, question=i):
+            available.add(i)
+    if request.method == 'POST':
+        selected_question = request.POST.get('selected_question')
+        question = Questions.objects.get(question_text=selected_question)
+        print(question)
+        new_union = TestQuestionUnion.create_union(test=TestQuiz.objects.get(id=id_test), question=question)
+        if new_union:
+            return redirect('test_list')
+    return render(request, 'add_existing_questions.html', {'questions': available})

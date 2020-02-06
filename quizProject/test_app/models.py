@@ -38,6 +38,7 @@ class Questions(models.Model):
     question_text = models.CharField(max_length=100, unique=True)
     answers_amount = models.IntegerField(default=4)
     one_correct_answer = models.BooleanField(default=True)
+    creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
     objects = models.Manager()
 
@@ -45,8 +46,8 @@ class Questions(models.Model):
         return f'{self.question_text}'
 
     @staticmethod
-    def create_question(question_text, answers_amount, one_correct_answer):
-        question = Questions(question_text=question_text, answers_amount=answers_amount)
+    def create_question(user, question_text, answers_amount):
+        question = Questions(creator=user, question_text=question_text, answers_amount=answers_amount)
         try:
             question.save()
             return question

@@ -7,5 +7,7 @@ urlpatterns = [
     path('<int:id_test>/delete', views.delete_quiz, name='delete_quiz'),
     re_path(r'^view_test/(?P<id_test>\w+)$', views.view_test, name='view_test'),
     re_path(r'^add_question/(?P<id_test>\w+)', views.add_question, name='add_question'),
+    re_path(r'^add_existing_questions/(?P<id_test>\w+)', views.add_my_existing_questions,
+            name='add_existing_questions'),
     path('<int:id_question>/add_option_answer', views.add_options_to_question, name='add_option_answers')
 ]
