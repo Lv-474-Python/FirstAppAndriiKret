@@ -58,7 +58,8 @@ class UserAnswers(models.Model):
         for i in all_tests:
             if UserAnswers.do_user_passed_test(user, i):
                 continue
-            available_tests.append(i)
+            if TestQuestionUnion.do_test_have_questions(test=i):
+                available_tests.append(i)
         return available_tests
 
     @staticmethod

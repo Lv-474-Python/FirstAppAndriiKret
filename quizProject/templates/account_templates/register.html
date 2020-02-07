@@ -10,11 +10,11 @@
 
     <form class="login-container" action='' method="POST">
         {% csrf_token%}
-        <p><input type="text" placeholder="Username" name="username" required></p>
+        <p><input type="text" placeholder="Username" name="username" maxlength="30" required></p>
         {% if user_exist%}
         <p class="warning">User already exist</p>
         {% endif%}
-        <p><input type="password" placeholder="Password" name="password" required></p>
+        <p><input type="password" placeholder="Password" name="password" maxlength="30" required></p>
         <p><input type="submit" value="Register"></p>
     </form>
 </div>

@@ -33,7 +33,7 @@ class CustomUser(AbstractBaseUser):
             return False
 
     def __str__(self):
-        return f'Username: {self.username};\n Is_quiz_creator: {self.quiz_creator};'
+        return f'{self.username}'
 
     @property
     def get_username(self):

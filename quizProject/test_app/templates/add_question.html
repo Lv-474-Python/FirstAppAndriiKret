@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}add question{% endblock %}
+{% block title %}Add question{% endblock %}
 {% block content %}
 <div class="d-flex justify-content-center ">
     <form action="" method="POST">
@@ -8,7 +8,7 @@
         <div class="form-group">
             <p>Question text:</p>
             <label>
-                <textarea name="question_text" placeholder="question text" required></textarea>
+                <textarea name="question_text" placeholder="question text" maxlength="100" required></textarea>
             </label>
             {%if error%}
             <p class="warning">*question already exist!</p>

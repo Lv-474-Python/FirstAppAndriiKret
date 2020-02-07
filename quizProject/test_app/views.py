@@ -69,7 +69,7 @@ def add_question(request, id_test):
 @login_required
 def add_options_to_question(request, id_question):
     if Questions.check_author(id_question, request.user):
-        current_question = Questions.objects.get(id=id_question)
+        current_question = Questions.get_question_by_id(id_question)
         if current_question.check_created_answer_amount():
             return redirect('test_list')
         answer_amount = current_question.answers_amount
@@ -83,12 +83,13 @@ def add_options_to_question(request, id_question):
                                            is_correct=is_correct)
             return redirect('test_list')
         return render(request, 'add_answers.html', {
-            'id_question': id_question,
+            'current_question': current_question,
             'answer_amount': list(range(answer_amount)),
         })
     raise PermissionDenied()
 
 
+@login_required
 def add_my_existing_questions(request, id_test):
     if TestQuiz.check_author(id_test, request.user):
         all_my_questions = Questions.objects.filter(creator=request.user)
@@ -103,12 +104,13 @@ def add_my_existing_questions(request, id_test):
                 print(question)
                 new_union = TestQuestionUnion.create_union(test=TestQuiz.objects.get(id=id_test), question=question)
                 if new_union:
-                    return redirect('test_list')
+                    return redirect('view_test', id_test=id_test)
             return render(request, 'add_existing_questions.html', {'questions': available, 'no_questions': False})
         return render(request, 'add_existing_questions.html', {'questions': available, 'no_questions': True})
     raise PermissionDenied()
 
 
+@login_required
 def delete_question_from_test(request, id_test, id_question):
     if TestQuiz.check_author(id_test, request.user):
         if Questions.check_author(id_question, request.user):
@@ -118,6 +120,7 @@ def delete_question_from_test(request, id_test, id_question):
     raise PermissionDenied()
 
 
+@login_required
 def my_question_list(request):
     questions = Questions.get_all_questions_by_creator_id(request.user)
     questions_and_answers = []
@@ -133,6 +136,7 @@ def my_question_list(request):
     return render(request, 'my_question_list.html', {'questions_and_answers': questions_and_answers})
 
 
+@login_required
 def permanent_delete_question(request, id_question):
     if Questions.check_author(id_question, request.user):
         Questions.delete_permanently(id_question)

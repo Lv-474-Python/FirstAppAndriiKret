@@ -1,28 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}View text{% endblock %}
+{% block title %}{{current_test}}{% endblock %}
 {% block content %}
 
-<div class="table-responsive-sm">
+<div class="table-responsive-sm" style="margin-bottom: 5%; margin-left: 10%; margin-right: 10%; margin-top: 4%">
+    <div>
+        <h2>{{current_test.test_name}}</h2>
+        <p style="text-align: right;">author:{{current_test.creator_id}}</p>
+    </div>
     <form action="" method="POST">
         {% csrf_token %}
-        <table class="table table-bordered table-dark">
-            <thead>
-            <tr>
-                <th colspan="12" class="text-center">{{current_test}}</th>
-            </tr>
-            </thead>
+        <table class="table table-bordered table-striped">
+
             <tbody>
 
             {%for el in questions_and_answers%}
-            <tr class="bg-success">
+            <tr class="" style="margin-top: 5%">
                 <td colspan="12" class="text-center">{{ forloop.counter }} : {{el.question}}</td>
             </tr>
-            <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
+            <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class=" text-dark">
                 {%for j in el.answer_options%}
                 <td style="width: 100%;">
                     <label>
-                        <input type="radio" name="{{el.question.id}}" value="{{j.id}}" required>{{j}}</input>
+                        <input type="radio" name="{{el.question.id}}" value="{{j.id}}" required> {{j}}</input>
                     </label>
                 </td>
                 {% endfor%}
@@ -31,7 +31,7 @@
             {% endfor %}
             </tbody>
         </table>
-        <input type="submit" value="Pass test">
+        <input type="submit" value="Submit Answers" class="btn btn-outline-primary btn-lg btn-block " style="margin-top: 5%">
     </form>
 </div>
 

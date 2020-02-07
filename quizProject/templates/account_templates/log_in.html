@@ -9,11 +9,11 @@
 
     <form class="login-container" action='' method="POST">
         {% csrf_token%}
-        <p><input type="text" placeholder="Username" name="username" required></p>
+        <p><input type="text" placeholder="Username" name="username" maxlength="30" required></p>
         {% if user_dont_exist%}
         <p class="warning">User dont exist</p>
         {% endif %}
-        <p><input type="password" placeholder="Password" name="password" required></p>
+        <p><input type="password" placeholder="Password" name="password" maxlength="30" required></p>
         {% if wrong_password%}
         <p class="warning">Wrong password</p>
         {% endif %}

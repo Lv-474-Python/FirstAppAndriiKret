@@ -1,29 +1,48 @@
 {% extends "base.html" %}
 
-{% block title %}View text{% endblock %}
+{% block title %}Inspect my test{% endblock %}
 {% block content %}
 
-<div class="table-responsive-sm">
-    <table class="table table-bordered table-dark">
-        <thead>
-        <tr>
-            <th colspan="12" class="text-center">{{current_test.test_name}}</th>
-        </tr>
-        </thead>
+
+<div class="" style="margin-left: 20%; margin-right: 20%; margin-top: 2%">
+    <div>
+        <h2>{{current_test.test_name}}</h2>
+        <p style="text-align: right;">author:{{user.username}}</p>
+    </div>
+
+    <div class="d-flex flex-row bd-highlight mb-3">
+        <div class="p-2 bd-highlight"><a href="{% url 'add_question' id_test=current_test.id%}"
+                                         class="btn btn-outline-primary btn-sm ">Add new question</a></div>
+        <div class="p-2 bd-highlight"><a href="{% url 'add_existing_questions' id_test=current_test.id%}"
+                                         class="btn btn-outline-primary btn-sm ">Add existing
+            question</a></div>
+    </div>
+    <table class="table table-borderless ">
+
         <tbody>
         {%for el in questions_and_answers%}
-        <tr class="bg-success">
-            <td colspan="6" class="text-center">{{ forloop.counter }} : {{el.question}}</td>
-            <td><a href="{% url 'delete_question_from_test' id_question=el.question.id id_test=current_test.id %}"
-                   class="delete_class">delete question from test</a></td>
-        </tr>
-        <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
+        <tr class="border-left border-primary">
+            <td class=" col-sm-2"><h5>Q{{ forloop.counter }} : {{el.question}}</h5></td>
             {% if not el.answer_options%}
-            <td style="width: 100%;"><p class="text-xs-center">No answers created</p></td>
-            <td><a href="{% url 'add_option_answers' id_question=el.question.id %}">create</a></td>
+            <td class=" text-center col-sm-1 align-bottom">
+                <p>
+                    <a href="{% url 'add_option_answers' id_question=el.question.id %}"
+                       class="btn btn-outline-primary btn-sm btn-block">create answers</a>
+                </p>
+            </td>
             {% endif%}
+            <td class=" text-center col-sm-1 align-bottom">
+                <p>
+                    <a href="{% url 'delete_question_from_test' id_question=el.question.id id_test=current_test.id %}"
+                       class="delete_class btn btn-outline-danger btn-sm btn-block">
+                        delete question
+                    </a>
+                </p>
+            </td>
+        </tr>
+        <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="d-flex flex-column bd-highlight mb-3">
             {%for j in el.answer_options%}
-            <td style="width: 100%;"><p class="text-xs-center"> {{j}}</p></td>
+            <td colspan="2"> a{{ forloop.counter }}: {{j}}</td>
             {% endfor%}
 
         </tr>
@@ -35,7 +54,7 @@
 
 <script>
     $(document).on('click', '.delete_class', function () {
-        return confirm('Are you sure you want to DELETE this forever?');
+        return confirm('Are you sure you want to delete question from test? (You can re-add it always in existing questions)');
     })
 </script>
 {% endblock%}

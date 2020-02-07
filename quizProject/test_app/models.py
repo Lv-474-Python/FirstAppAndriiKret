@@ -79,6 +79,13 @@ class Questions(models.Model):
             return None
 
     @staticmethod
+    def get_question_by_id(id_question):
+        try:
+            return Questions.objects.get(id=id_question)
+        except (ValueError, IntegrityError):
+            return None
+
+    @staticmethod
     def get_all_questions_by_creator_id(creator_id):
         try:
             all_questions = Questions.objects.filter(creator=creator_id)
@@ -149,4 +156,17 @@ class TestQuestionUnion(models.Model):
         try:
             TestQuestionUnion.objects.get(test=test, question=question).delete()
         except (ValueError, IntegrityError):
+            return None
+
+    @staticmethod
+    def do_test_have_questions(test):
+        try:
+            union = TestQuestionUnion.objects.filter(test=test)
+            if union:
+                for i in union:
+                    if i.question.check_created_answer_amount():
+                        return True
+                return False
+            return False
+        except (IntegrityError, ValueError, TypeError):
             return None

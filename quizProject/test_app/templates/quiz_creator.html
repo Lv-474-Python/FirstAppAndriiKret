@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Log In{% endblock %}
+{% block title %}Create new Test{% endblock %}
 {% block content %}
-<div>
+<div class="container">
+    <div style="margin-top: 4%; margin-bottom: 4%;">
+        <h2 class="text-center">Create new Test</h2>
+    </div>
     <form action="" method="POST">
-        {% csrf_token%}
-        <p><input type="text" name="test_name" placeholder="Name of test" maxlength="30"></p>
-        <p><input type="submit" value="Create Test"></p>
+        <table class="table table-borderless ">
+            <tbody>
+            <tr style="display: flex; flex-flow: row nowrap; width: 100%;"
+                class="d-flex flex-column bd-highlight mb-3 border border-secondary">
+                <td colspan="2"><p><input type="text" name="test_name" placeholder="Name of test" class="form-control" maxlength="30"></p></td>
+                <td colspan="2"> <p><input type="submit" value="Create Test" class="btn btn-outline-primary btn-lg btn-block "></p></td>
+            </tr>
+            </tbody>
+            {% csrf_token%}
 
+        </table>
     </form>
 </div>
 {% endblock %}

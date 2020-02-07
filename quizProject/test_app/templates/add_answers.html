@@ -1,15 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}add answers{% endblock %}
+{% block title %}Add answers to question{% endblock %}
 {% block content %}
-<div>
+<div class="container">
+    <div style="margin-top: 4%; margin-bottom: 4%;">
+        <h2 class="text-center">Add answer to "{{current_question.question_text}}"</h2>
+    </div>
     <form action="" method="POST">
         {% csrf_token%}
-        {% for i in answer_amount%}
-        <p>Answer {{ forloop.counter }}: <input type="text" name="answer_text_{{i}}" placeholder="answer text" required></p>
-        <p><input type="radio" name="is_correct" value="{{i}}" required>Is correct?</p>
-        {%endfor%}
-        <p><input type="submit" value="add question to"></p>
+        <table class="table table-borderless ">
+            <tbody>
+            {% for i in answer_amount%}
+            <tr style="display: flex; flex-flow: row nowrap; width: 100%;"
+                class="d-flex flex-column bd-highlight mb-3 border border-secondary">
+                <td colspan="2">
+                    <p class="text-center">
+                        Answer {{ forloop.counter }}:
+                        <textarea type="text" name="answer_text_{{i}}"
+                                  placeholder="answer text"
+                                  maxlength="50"
+                                  class="form-control"
+                                  required></textarea>
+                    </p>
+                </td>
+                <td colspan="2"><p class="text-center"><input type="radio" name="is_correct" value="{{i}}" required>Is
+                    correct?</p></td>
+                {%endfor%}
+
+            </tr>
+            </tbody>
+        </table>
+        <p><input type="submit" value="Add answers" class="btn btn-outline-primary btn-lg btn-block "></p>
     </form>
 </div>
 {% endblock %}

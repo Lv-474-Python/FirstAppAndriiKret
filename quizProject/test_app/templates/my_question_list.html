@@ -1,28 +1,37 @@
 {% extends "base.html" %}
 
-{% block title %}View text{% endblock %}
+{% block title %}My question list{% endblock %}
 {% block content %}
 
-<div class="table-responsive-sm">
-    <table class="table table-bordered table-dark">
-        <thead>
-        <tr>
-            <th colspan="12" class="text-center">My questions</th>
-        </tr>
-        </thead>
+<div class="" style="margin-left: 20%; margin-right: 20%; margin-top: 2%">
+    <div>
+        <h2>All my created questions</h2>
+        <p style="text-align: right;">author:{{user.username}}</p>
+    </div>
+
+    <table class="table table-striped table-borderless">
+
         <tbody>
         {%for el in questions_and_answers%}
-        <tr class="bg-success">
-            <td colspan="6" class="text-center">{{ forloop.counter }} : {{el.question}}</td>
-            <td><a href="{% url 'permanent_delete_question' id_question=el.question.id%}" class="delete_class">permanent_delete_question</a></td>
+        <tr style=" ">
+            <td class=" col-sm-4"><h5>Q{{ forloop.counter }} : {{el.question}}</h5></td>
+            <td class=" text-center col-sm-1 align-bottom">
+                <p>
+                    <a href="{% url 'permanent_delete_question' id_question=el.question.id%}"
+                       class="delete_class btn btn-outline-danger btn-sm btn-block">
+                        Permanent delete
+                    </a>
+                </p>
+            </td>
         </tr>
-        <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="table-success text-dark">
+
+        <tr style="display: flex; flex-flow: row nowrap; width: 100%;" class="d-flex flex-column bd-highlight mb-3">
             {% if not el.answer_options%}
             <td style="width: 100%;"><p class="text-xs-center">No answers created</p></td>
             <td><a href="{% url 'add_option_answers' id_question=el.question.id %}">create</a></td>
             {% endif%}
             {%for j in el.answer_options%}
-            <td style="width: 100%;"><p class="text-xs-center"> {{j}}</p></td>
+            <td colspan="2"> a{{ forloop.counter }}: {{j}}</td>
             {% endfor%}
 
         </tr>
@@ -32,6 +41,7 @@
     </table>
 </div>
 
+
 <script>
     $(document).on('click', '.delete_class', function () {
         return confirm('Are you sure you want to DELETE this forever?');
@@ -40,3 +50,4 @@
 
 
 {% endblock%}
+`

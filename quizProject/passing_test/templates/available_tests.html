@@ -1,24 +1,30 @@
 {% extends "base.html" %}
 
-{% block title %}User list{% endblock %}
+{% block title %}Available tests to pass{% endblock %}
 {% block content %}
 
 <div class="container">
+    {% if list%}
     <table class="table table-hover">
-        <thead class=" bg-primary">
+        <thead class=" ">
         <tr>
             <th colspan="4">Test name:</th>
         </tr>
         </thead>
         <tbody>
+
         {%for i in list%}
         <tr>
             <td class="col-11">{{i}}</td>
             <td><a href="{% url 'pass_test' id_test=i.id%}" class="btn btn-outline-primary btn-sm">Pass</a></td>
         </tr>
         {% endfor %}
+
         </tbody>
     </table>
+    {% else %}
+    <h2>No available tests</h2>
+    {% endif%}
 </div>
 
 
