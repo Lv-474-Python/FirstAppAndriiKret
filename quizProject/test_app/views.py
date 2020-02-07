@@ -60,8 +60,8 @@ def add_question(request, id_test):
                         return redirect('add_option_answers', id_question=question.id)
                 except AttributeError:
                     error = True
-                    return render(request, 'add_question.html', {'error': error})
-            return render(request, 'add_question.html')
+                    return render(request, 'add_question.html', {'error': error, 'current_test': current_test})
+            return render(request, 'add_question.html', {'current_test': current_test})
         raise PermissionDenied()
     return Http404
 

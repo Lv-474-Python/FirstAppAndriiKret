@@ -25,11 +25,11 @@ body {
   margin-right: auto;
   margin-left: auto;
   border: 12px solid transparent;
-  border-bottom-color: #DC143C;
+  border-bottom-color: dodgerblue;
 }
 
 .login-header {
-  background: #DC143C;
+  background: dodgerblue;
   padding: 20px;
   font-size: 1.4em;
   font-weight: normal;
@@ -39,7 +39,7 @@ body {
 }
 
 .login-container {
-  background: #FA8072;
+  background: lightblue;
   padding: 12px;
 }
 
@@ -74,7 +74,7 @@ body {
 }
 
 .login input[type="submit"] {
-  background: #8B0000;
+  background: darkblue;
   border-color: transparent;
   color: whitesmoke;
   cursor: pointer;

@@ -11,13 +11,13 @@
         {% csrf_token%}
         <p><input type="text" placeholder="Username" name="username" maxlength="30" required></p>
         {% if user_dont_exist%}
-        <p class="warning">User dont exist</p>
+        <p class="warning text-center">User dont exist</p>
         {% endif %}
         <p><input type="password" placeholder="Password" name="password" maxlength="30" required></p>
         {% if wrong_password%}
-        <p class="warning">Wrong password</p>
+        <p class="warning text-center">Wrong password</p>
         {% endif %}
-        <p>Don't have account? Register <a href="{% url 'register_user' %}">here</a></p>
+        <p class="text-center">Don't have account? Register <a href="{% url 'register_user' %}">here</a></p>
         <p><input type="submit" value="Log in"></p>
     </form>
 </div>

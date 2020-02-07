@@ -16,7 +16,7 @@
         <tbody>
         {%for i in list%}
         <tr>
-            <td class="col-3">{{i}}</td>
+            <td class="col-2">{{i}}</td>
             <td class="col-2">
                 <a href="{% url 'view_test' id_test=i.id%}" class="btn btn-outline-primary btn-sm btn-block">View test</a>
             </td>
@@ -32,6 +32,21 @@
             </td>
         </tr>
         {% endfor %}
+        </tbody>
+    </table>
+    <table class="table table-borderless">
+        <tbody>
+        <tr>
+            <td class="col-2">
+                <a href="{% url 'create_quiz'%}" class="btn btn-secondary btn-sm btn-block">Create new test</a>
+            </td>
+            <td class="col-2">
+                <a href="{% url 'my_question_list'%}" class="btn btn-secondary btn-sm btn-block">Go to my questions</a>
+            </td>
+            <td class="col-2">
+                <a href="{% url 'my_test_results'%}" class="btn btn-secondary btn-sm btn-block">Go to my results</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

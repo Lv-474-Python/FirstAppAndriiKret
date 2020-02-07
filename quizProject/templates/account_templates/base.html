@@ -22,19 +22,13 @@
         <ul class="navbar-nav">
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'available_test_list' %}">Tests</a>
+                <a class="nav-link" href="{% url 'available_test_list' %}">Available Tests</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'test_list' %}">My test list</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'create_quiz' %}">Create quiz</a>
+                <a class="nav-link" href="{% url 'test_list' %}">My tests</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="">{{user.username}}</a>
-            </li>
-            <li>
-                <a class="nav-link" href="{% url 'my_question_list' %}">my_question_list</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'log_out' %}">Logout</a>
@@ -52,9 +46,38 @@
 </nav>
 {% block content %}
 <div class="container">
-    <div class="d-flex justify-content-center">
-    <h1>Welcome to TestQuiz!</h1>
+    <div style="margin-top: 4%; margin-bottom: 4%;">
+        <h2 class="text-center">Welcome to TestQuiz</h2>
     </div>
+    {% if user.is_authenticated %}
+    <table class="table table-borderless">
+        <tbody>
+        <tr>
+            <td class="col-2">
+                <a href="{% url 'available_test_list'%}" class="btn btn-secondary btn-sm btn-block">Go to available
+                    tests to attempt</a>
+            </td>
+            <td class="col-2">
+                <a href="{% url 'test_list'%}" class="btn btn-secondary btn-sm btn-block">Go to my tests</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% else %}
+    <table class="table table-borderless">
+        <tbody>
+        <tr>
+            <td class="col-2">
+                <a href="{% url 'log_in'%}" class="btn btn-secondary btn-sm btn-block">Log In</a>
+            </td>
+            <td class="col-2">
+                <a href="{% url 'register_user'%}" class="btn btn-secondary btn-sm btn-block">Register</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% endif %}
+</div>
 </div>
 
 {% endblock %}
